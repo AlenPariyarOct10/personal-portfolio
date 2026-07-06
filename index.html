@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="Qh96RSswQYur1GzG-Km7tdG7zgehvqTkSkNausDuE-s" />
+    <title>
+      Alen Pariyar | Full-Stack Laravel Developer & Former President RR Decoders
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Alen Pariyar is a Full-Stack Laravel Developer and Former President of RR Decoders based in Nepal. High-achieving BCA student with 4.0 GPAs in technical cores. Specialized in PHP, React, and MySQL."
+    />
+    <meta
+      name="keywords"
+      content="Alen Pariyar, Laravel Developer Nepal, Web Developer Nepal, Full-Stack Developer, RR Decoders President, BCA Student Portfolio, PHP Developer Kathmandu, React Developer, IT Student Nepal"
+    />
+    <meta name="author" content="Alen Pariyar" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://alenpariyar.com.np" />
+
+    <!-- Open Graph / Social Media -->
+    <meta
+      property="og:title"
+      content="Alen Pariyar | Full-Stack Laravel Developer & Former President RR Decoders"
+    />
+    <meta
+      property="og:description"
+      content="Professional portfolio of Alen Pariyar. Expert Laravel developer, Former President of RR Decoders, and academic topper with multiple 4.0 GPAs."
+    />
+    <meta
+      property="og:image"
+      content="https://i.ibb.co/KpzRgjVY/alen-profile.jpg"
+    />
+    <meta property="og:url" content="https://alenpariyar.com.np" />
+    <meta property="og:type" content="website" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Alen Pariyar",
+        "url": "https://alenpariyar.com.np",
+        "image": "https://i.ibb.co/KpzRgjVY/alen-profile.jpg",
+        "jobTitle": "Full-Stack Laravel Developer",
+        "honorificPrefix": "Former President of RR Decoders",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Ratna Rajyalaxmi Campus, Tribhuvan University"
+        },
+        "description": "Full-Stack Laravel Developer and IT Student from Nepal with expertise in PHP, React, and MySQL. Academic topper with 4.0 GPAs in core technical subjects.",
+        "sameAs": [
+          "https://github.com/AlenPariyarOct10",
+          "https://www.linkedin.com/in/alen-pariyar/",
+          "https://www.facebook.com/itisalenpariyar"
+        ]
+      }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://i.ibb.co/KpzRgjVY/alen-profile.jpg"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: { 500: "#3b82f6", 600: "#2563eb" },
+              accent: { 500: "#8b5cf6" },
+            },
+            fontFamily: { mono: ["JetBrains Mono", "monospace"] },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .typing-text::after {
+        content: "|";
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        0%,
+        50% {
+          opacity: 1;
+        }
+        51%,
+        100% {
+          opacity: 0;
+        }
+      }
+      #particles-js {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+      }
+      .dark .glass-card {
+        background: rgba(17, 24, 39, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .nav-blur {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .timeline-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid #3b82f6;
+        background: white;
+        z-index: 1;
+      }
+      .dark .timeline-dot {
+        background: #111827;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300"
+  >
+    <div id="particles-js"></div>
+
+    <div class="relative z-10">
+      <!-- Navigation -->
+      <nav
+        class="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-950/80 nav-blur border-b border-gray-200 dark:border-gray-800"
+      >
+        <div
+          class="container mx-auto px-4 py-4 flex justify-between items-center"
+        >
+          <a href="#" class="text-2xl font-bold gradient-text">Alen Pariyar</a>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="#about"
+              class="hover:text-primary-500 transition-colors font-medium"
+              >About</a
+            >
+            <a
+              href="#experience"
+              class="hover:text-primary-500 transition-colors font-medium"
+              >Experience</a
+            >
+            <a
+              href="#education"
+              class="hover:text-primary-500 transition-colors font-medium"
+              >Education</a
+            >
+            <a
+              href="#projects"
+              class="hover:text-primary-500 transition-colors font-medium"
+              >Projects</a
+            >
+            <a
+              href="#skills"
+              class="hover:text-primary-500 transition-colors font-medium"
+              >Skills</a
+            >
+            <a
+              href="https://www.edu.alenpariyar.com.np"
+              target="_blank"
+              class="hover:text-primary-500 transition-colors font-medium"
+              >BCA Notes</a
+            >
+            <a
+              href="#contact"
+              class="px-5 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-full transition-all text-sm font-semibold"
+              >Hire Me</a
+            >
+
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            >
+              <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
+              <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+            </button>
+          </div>
+
+          <button
+            id="menu-button"
+            class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <section id="about" class="min-h-screen flex items-center pt-24 pb-12">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-2/3 scroll-reveal">
+              <div
+                class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-sm font-semibold mb-6"
+              >
+                <span class="relative flex h-2 w-2 mr-2">
+                  <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"
+                  ></span>
+                  <span
+                    class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"
+                  ></span>
+                </span>
+                Available for new projects
+              </div>
+              <h1
+                class="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight"
+              >
+                Hi, I'm <span class="gradient-text">Alen Pariyar</span><br />
+                <span
+                  id="typing-text"
+                  class="text-4xl lg:text-5xl text-gray-700 dark:text-gray-400 font-bold"
+                >Web Developer</span>
+              </h1>
+                <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl leading-relaxed">
+                Former President of RR Decoders with a strong academic record. I build scalable, mission-critical web experiences using <span class="text-primary-600 dark:text-primary-400 font-bold">Laravel, PHP, Python and React</span>.
+                </p>
+              <div class="flex flex-wrap gap-4">
+                <a
+                  href="#contact"
+                  class="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all shadow-lg shadow-primary-600/30 font-bold flex items-center"
+                >
+                  <i data-lucide="mail" class="w-5 h-5 mr-2"></i> Get In Touch
+                </a>
+                <a
+                  href="https://drive.google.com/file/d/1whyZ9lkcwC7xCBRagdu9mXD56CUOC8D-/view?usp=sharing"
+                  target="_blank"
+                  class="px-8 py-4 border-2 border-primary-600 text-primary-600 dark:text-primary-400 hover:bg-primary-600 hover:text-white rounded-xl transition-all font-bold flex items-center"
+                >
+                  <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download
+                  CV
+                </a>
+              </div>
+            </div>
+            <div class="lg:w-1/3 flex justify-center scroll-reveal">
+              <div class="relative w-72 h-72 lg:w-96 lg:h-96">
+                <div
+                  class="absolute inset-0 bg-gradient-to-tr from-primary-500 to-accent-500 rounded-full blur-3xl opacity-20 animate-pulse"
+                ></div>
+                <div
+                  class="relative w-full h-full rounded-full border-8 border-white dark:border-gray-900 shadow-2xl overflow-hidden"
+                >
+                  <img
+                    src="https://i.ibb.co/KpzRgjVY/alen-profile.jpg"
+                    alt="Alen Pariyar"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Section -->
+      <section id="experience" class="py-24 bg-white dark:bg-gray-950">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
+              Professional Experience
+            </h2>
+            <div class="space-y-12">
+              <!-- Experience Item 1 -->
+              <div
+                class="relative pl-10 border-l-2 border-gray-200 dark:border-gray-800 scroll-reveal"
+              >
+                <div class="absolute -left-[7px] top-0 timeline-dot"></div>
+                <div
+                  class="flex flex-col md:flex-row md:justify-between md:items-start mb-2"
+                >
+                  <h3 class="text-2xl font-bold">Laravel Developer Intern</h3>
+                  <span
+                    class="text-primary-600 dark:text-primary-400 font-semibold bg-primary-50 dark:bg-primary-900/30 px-3 py-1 rounded-md text-sm mt-2 md:mt-0"
+                    >August 2025 — November 2025</span
+                  >
+                </div>
+                <p
+                  class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4"
+                >
+                  Easy Access Pvt. Ltd | Tinkune, Kathmandu
+                </p>
+                <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                  <li class="flex items-start">
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
+                    ></i>
+                    Developed and maintained scalable web applications using
+                    Laravel and MySQL.
+                  </li>
+                  <li class="flex items-start">
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
+                    ></i>
+                    Integrated third-party APIs and optimized database queries
+                    for high performance.
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Experience Item 2 -->
+              <div
+                class="relative pl-10 border-l-2 border-gray-200 dark:border-gray-800 scroll-reveal"
+              >
+                <div class="absolute -left-[7px] top-0 timeline-dot"></div>
+                <div
+                  class="flex flex-col md:flex-row md:justify-between md:items-start mb-2"
+                >
+                  <h3 class="text-2xl font-bold">
+                    Web Support Specialist
+                  </h3>
+                  <span
+                    class="text-gray-500 font-semibold bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-md text-sm mt-2 md:mt-0"
+                    >Sep 2023 — Nov 2023</span
+                  >
+                </div>
+                <p
+                  class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4"
+                >
+                  NEFIN Climate Change Partnership Program
+                </p>
+                <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                  <li class="flex items-start">
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
+                    ></i>
+                    Provided web support and managed data interfaces for
+                    environmental projects.
+                  </li>
+                  <li class="flex items-start">
+                    <i
+                      data-lucide="chevron-right"
+                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
+                    ></i>
+                    Enhanced UI/UX for internal dashboards and reporting tools.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education & Leadership -->
+      <section id="education" class="py-24 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
+            Education & Leadership
+          </h2>
+
+          <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <!-- Academic Excellence -->
+            <div
+              class="glass-card p-8 rounded-2xl scroll-reveal border border-primary-500/20"
+            >
+              <div
+                class="w-14 h-14 bg-primary-100 dark:bg-primary-900/40 rounded-xl flex items-center justify-center mb-6"
+              >
+                <i
+                  data-lucide="graduation-cap"
+                  class="w-8 h-8 text-primary-600 dark:text-primary-400"
+                ></i>
+              </div>
+
+              <h3 class="text-2xl font-bold mb-6">Academic Qualifications</h3>
+
+              <div class="space-y-8">
+                <div>
+                  <p class="font-bold text-gray-900 dark:text-white">
+                    Bachelor in Computer Application (BCA)
+                  </p>
+                  <p class="text-sm text-gray-500 mb-2">
+                    Ratna Rajyalaxmi Campus, Tribhuvan University
+                  </p>
+          
+                  <div
+                    class="flex items-center text-green-600 dark:text-green-400 font-semibold"
+                  >
+                  <i data-lucide="star" class="w-4 h-4 mr-2 fill-current"></i>
+                    GPA 4.0 in Core Programming Subjects
+                  </div>
+                </div>
+
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                  <p class="font-bold text-gray-900 dark:text-white">
+                    +2 in Computer Science
+                  </p>
+                  <p class="text-sm text-gray-500 mb-3">
+                    Bhaktinamuna Secondary School, Lamjung, Nepal
+                  </p>
+                  <div
+                    class="flex items-center text-green-600 dark:text-green-400 font-semibold"
+                  >
+                    <i data-lucide="star" class="w-4 h-4 mr-2 fill-current"></i>
+                    GPA 4.0 in Computer Science
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Leadership & Vision -->
+            <div
+              class="glass-card p-8 rounded-2xl scroll-reveal border border-accent-500/20"
+            >
+              <div
+                class="w-14 h-14 bg-accent-100 dark:bg-accent-900/40 rounded-xl flex items-center justify-center mb-6"
+              >
+                <i
+                  data-lucide="award"
+                  class="w-8 h-8 text-accent-600 dark:text-accent-400"
+                ></i>
+              </div>
+
+              <h3 class="text-2xl font-bold mb-6">Leadership & Vision</h3>
+
+              <div class="space-y-6">
+                <div>
+                  <p class="font-bold text-gray-900 dark:text-white">
+                    Former President – RR Decoders
+                  </p>
+                  <p class="text-sm text-gray-500 mb-4">
+                    Official IT Club of Ratna Rajyalaxmi Campus
+                  </p>
+
+                  <ul class="space-y-4 text-gray-600 dark:text-gray-400">
+                    <li class="flex items-start">
+                      <i
+                        data-lucide="check-circle"
+                        class="w-5 h-5 text-accent-500 mr-2 shrink-0"
+                      ></i>
+                      Led and mentored a community of 500+ tech-focused
+                      students.
+                    </li>
+                    <li class="flex items-start">
+                      <i
+                        data-lucide="check-circle"
+                        class="w-5 h-5 text-accent-500 mr-2 shrink-0"
+                      ></i>
+                      Organized campus-wide hackathons, coding competitions, and
+                      workshops.
+                    </li>
+                    <li class="flex items-start">
+                      <i
+                        data-lucide="check-circle"
+                        class="w-5 h-5 text-accent-500 mr-2 shrink-0"
+                      ></i>
+                      Built partnerships with IT companies and training
+                      institutes in Nepal.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Academics Section -->
+    <section id="academics" class="py-5 bg-gray-50 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
+        Academic Achievements - 4.0 GPAs in Core Technical Subjects
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
+
+        <!-- Computer Fundamentals & Applications -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-bash-plain colored text-5xl mb-4"></i>
+            <p class="font-bold">CFA</p>
+        </div>
+
+        <!-- Web Technology -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-atom-original colored text-5xl mb-4"></i>
+            <p class="font-bold">Web Technology</p>
+        </div>
+
+        <!-- Scripting Language -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-python-plain colored text-5xl mb-4"></i>
+            <p class="font-bold">Scripting Language</p>
+        </div>
+
+        <!-- .NET Technology -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-dotnetcore-plain colored text-5xl mb-4"></i>
+            <p class="font-bold">.NET Technology</p>
+        </div>
+
+        <!-- Network Programming -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-netbox-plain colored text-5xl mb-4"></i>
+            <p class="font-bold">Network Programming</p>
+        </div>
+
+        <!-- Cloud Computing -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-amazonwebservices-plain colored text-5xl mb-4"></i>
+            <p class="font-bold">Cloud Computing</p>
+        </div>
+
+        <!-- Project I -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-php-plain colored text-5xl mb-4"></i>
+            <p class="font-bold">Project I</p>
+        </div>
+
+        <!-- Project II -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-laravel-original colored text-5xl mb-4"></i>
+            <p class="font-bold">Project II</p>
+        </div>
+
+        <!-- Internship -->
+        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
+            <i class="devicon-composer-plain colored text-5xl mb-4"></i>
+            <p class="font-bold">Internship</p>
+        </div>
+
+        </div>
+    </div>
+    </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="py-24 bg-white dark:bg-gray-950">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
+            Featured Projects
+          </h2>
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+          >
+            <!-- Project 1: SaralKakshya -->
+            <div
+              class="glass-card rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-500 scroll-reveal"
+            >
+              <div class="p-8">
+                <div class="flex justify-between items-start mb-4">
+                  <h3
+                    class="text-2xl font-bold group-hover:text-primary-600 transition-colors"
+                  >
+                    SaralKakshya
+                  </h3>
+                  <a
+                    href="https://github.com/AlenPariyarOct10/SaralKakshyaProject"
+                    target="_blank"
+                    class="text-gray-400 hover:text-primary-500 transition-colors"
+                  >
+                    <i data-lucide="github" class="w-6 h-6"></i>
+                  </a>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
+                  A smart online classroom management system that automates
+                  attendance, assignment tracking, and resource sharing for
+                  teachers and students.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span
+                    class="px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 text-xs font-bold rounded-full"
+                    >Laravel</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 text-xs font-bold rounded-full"
+                    >Livewire</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-600 text-xs font-bold rounded-full"
+                    >MySQL</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 2: MitraPark -->
+            <div
+              class="glass-card rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-500 scroll-reveal"
+            >
+              <div class="p-8">
+                <div class="flex justify-between items-start mb-4">
+                  <h3
+                    class="text-2xl font-bold group-hover:text-primary-600 transition-colors"
+                  >
+                    MitraPark
+                  </h3>
+                  <a
+                    href="https://github.com/AlenPariyarOct10/MitraPark"
+                    target="_blank"
+                    class="text-gray-400 hover:text-primary-500 transition-colors"
+                  >
+                    <i data-lucide="github" class="w-6 h-6"></i>
+                  </a>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
+                  A social media networking platform focused on local
+                  communities, featuring real-time messaging, profile
+                  customization, and admin management.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span
+                    class="px-3 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-600 text-xs font-bold rounded-full"
+                    >PHP</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 text-xs font-bold rounded-full"
+                    >JavaScript</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 text-xs font-bold rounded-full"
+                    >MySQL</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 3: SaralNotes -->
+            <div
+              class="glass-card rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-500 scroll-reveal"
+            >
+              <div class="p-8">
+                <div class="flex justify-between items-start mb-4">
+                  <h3
+                    class="text-2xl font-bold group-hover:text-primary-600 transition-colors"
+                  >
+                    SaralNotes
+                  </h3>
+                  <a
+                    href="https://github.com/AlenPariyarOct10/SaralNoteKeep_v1"
+                    target="_blank"
+                    class="text-gray-400 hover:text-primary-500 transition-colors"
+                  >
+                    <i data-lucide="github" class="w-6 h-6"></i>
+                  </a>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
+                  A cross-platform note-taking app with secure JWT
+                  authentication and rich text support, built for organized
+                  academic note management.
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span
+                    class="px-3 py-1 bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 text-xs font-bold rounded-full"
+                    >React</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 text-xs font-bold rounded-full"
+                    >Laravel API</span
+                  >
+                  <span
+                    class="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 text-xs font-bold rounded-full"
+                    >Tailwind</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="py-24 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
+            Technical Arsenal
+          </h2>
+          <div
+            class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto"
+          >
+            <!-- Skill Card -->
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-laravel-plain colored text-5xl mb-4"></i>
+              <p class="font-bold">Laravel</p>
+            </div>
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-php-plain colored text-5xl mb-4"></i>
+              <p class="font-bold">PHP</p>
+            </div>
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-python-plain colored text-5xl mb-4"></i>
+              <p class="font-bold">Python</p>
+            </div>
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-react-original colored text-5xl mb-4"></i>
+              <p class="font-bold">React</p>
+            </div>
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-javascript-plain colored text-5xl mb-4"></i>
+              <p class="font-bold">JavaScript</p>
+            </div>
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-mysql-plain colored text-5xl mb-4"></i>
+              <p class="font-bold">MySQL</p>
+            </div>
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-tailwindcss-plain colored text-5xl mb-4"></i>
+              <p class="font-bold">Tailwind</p>
+            </div>
+            <div
+              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
+            >
+              <i class="devicon-bootstrap-plain colored text-5xl mb-4"></i>
+              <p class="font-bold">Bootstrap</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer / Contact Section -->
+      <footer id="contact" class="bg-white dark:bg-gray-950 pt-24 pb-12">
+        <div class="container mx-auto px-4 text-center">
+          <h2 class="text-4xl font-extrabold mb-8">
+            Ready to elevate your project?
+          </h2>
+          <p
+            class="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto"
+          >
+            I'm currently looking for new opportunities as a Laravel Developer.
+            Whether you have a question or just want to say hi, I'll get back to
+            you!
+          </p>
+          <a
+            href="mailto:oct10.alenpariyar@gmail.com"
+            class="inline-flex items-center px-10 py-5 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl text-lg font-bold shadow-2xl shadow-primary-600/30 transition-all transform hover:scale-105 mb-16"
+          >
+            <i data-lucide="mail" class="w-6 h-6 mr-3"></i>
+            oct10.alenpariyar@gmail.com
+          </a>
+
+          <div class="flex justify-center gap-6 mb-12">
+            <a
+              href="https://github.com/AlenPariyarOct10"
+              target="_blank"
+              class="w-14 h-14 rounded-full glass-card flex items-center justify-center hover:text-primary-500 hover:border-primary-500 transition-all"
+            >
+              <i class="devicon-github-plain colored text-5xl"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/alen-pariyar/"
+              target="_blank"
+              class="w-14 h-14 rounded-full glass-card flex items-center justify-center hover:text-primary-500 hover:border-primary-500 transition-all"
+            >
+              <i class="devicon-linkedin-plain colored text-5xl"></i>
+            </a>
+            <a
+              href="https://www.facebook.com/itisalenpariyar"
+              target="_blank"
+              class="w-14 h-14 rounded-full glass-card flex items-center justify-center hover:text-primary-500 hover:border-primary-500 transition-all"
+            >
+              <i class="devicon-facebook-plain colored text-5xl"></i>
+            </a>
+          </div>
+
+          <div
+            class="pt-12 border-t border-gray-100 dark:border-gray-900 text-gray-500 text-sm"
+          >
+            <p>
+              &copy; 2026 Alen Pariyar. 
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      // Theme Toggle
+      const themeToggle = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        html.classList.add("dark");
+      } else {
+        html.classList.remove("dark");
+      }
+
+      themeToggle.addEventListener("click", () => {
+        html.classList.toggle("dark");
+        localStorage.theme = html.classList.contains("dark") ? "dark" : "light";
+        initParticles(); // Re-init particles to update colors
+      });
+
+      // Typing Effect
+      const typingText = document.getElementById("typing-text");
+      const roles = [
+        "Laravel Developer",
+        "Full-Stack Expert",
+        "Former President, RR Decoders",
+        "Web Application Enthusiast",
+      ];
+      let roleIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      function type() {
+        const currentRole = roles[roleIndex];
+        if (isDeleting) {
+          typingText.textContent = currentRole.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typingText.textContent = currentRole.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentRole.length) {
+          isDeleting = true;
+          typeSpeed = 2000; // Pause at full word
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          typeSpeed = 500;
+        }
+
+        setTimeout(type, typeSpeed);
+      }
+      type();
+
+      // Particles.js Initialization
+      function initParticles() {
+        const isDark = html.classList.contains("dark");
+        particlesJS("particles-js", {
+          particles: {
+            number: { value: 40, density: { enable: true, value_area: 800 } },
+            color: { value: isDark ? "#3b82f6" : "#2563eb" },
+            shape: { type: "circle" },
+            opacity: { value: 0.1, random: false },
+            size: { value: 3, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: isDark ? "#3b82f6" : "#2563eb",
+              opacity: 0.1,
+              width: 1,
+            },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: "none",
+              random: false,
+              straight: false,
+              out_mode: "out",
+              bounce: false,
+            },
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "grab" },
+              onclick: { enable: true, mode: "push" },
+              resize: true,
+            },
+            modes: {
+              grab: { distance: 140, line_linked: { opacity: 1 } },
+              push: { particles_nb: 4 },
+            },
+          },
+          retina_detect: true,
+        });
+      }
+      initParticles();
+
+      // Scroll Reveal
+      const observerOptions = { threshold: 0.1 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+          }
+        });
+      }, observerOptions);
+
+      document
+        .querySelectorAll(".scroll-reveal")
+        .forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

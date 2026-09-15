@@ -62,234 +62,418 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <script src="https://unpkg.com/lucide@latest"></script>
-<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
     <link
       rel="icon"
       type="image/x-icon"
       href="https://i.ibb.co/KpzRgjVY/alen-profile.jpg"
     />
 
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
     <script>
       tailwind.config = {
         darkMode: "class",
         theme: {
           extend: {
-            colors: {
-              primary: { 500: "#3b82f6", 600: "#2563eb" },
-              accent: { 500: "#8b5cf6" },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
             },
-            fontFamily: { mono: ["JetBrains Mono", "monospace"] },
+            colors: {
+              brand: {
+                primary: "#4F46E5",
+                secondary: "#7C3AED",
+                accent: "#06B6D4",
+                success: "#10B981",
+                warning: "#F59E0B",
+                danger: "#EF4444",
+              },
+            },
           },
         },
       };
     </script>
     <style>
+      :root {
+        --bg: #f8fafc;
+        --bg-soft: #eef2f7;
+        --card: rgba(255, 255, 255, 0.65);
+        --card-solid: #ffffff;
+        --fg: #0f172a;
+        --fg-muted: #475569;
+        --border: rgba(15, 23, 42, 0.09);
+        --ring: #4f46e5;
+        --shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+      }
+      .dark {
+        --bg: #0f172a;
+        --bg-soft: #0b1222;
+        --card: rgba(30, 41, 59, 0.55);
+        --card-solid: #1e293b;
+        --fg: #f1f5f9;
+        --fg-muted: #94a3b8;
+        --border: rgba(255, 255, 255, 0.09);
+        --ring: #818cf8;
+        --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      }
+
+      * { -webkit-tap-highlight-color: transparent; }
+      html { color-scheme: light; }
+      html.dark { color-scheme: dark; }
+
       body {
         font-family: "Inter", sans-serif;
+        background: var(--bg);
+        color: var(--fg);
         overflow-x: hidden;
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .scroll-reveal {
         opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: background-color 0.4s ease, color 0.4s ease, opacity 0.6s ease;
       }
-      .scroll-reveal.revealed {
-        opacity: 1;
-        transform: translateY(0);
+      body.loaded { opacity: 1; }
+
+      ::selection { background: var(--ring); color: white; }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: var(--bg); }
+      ::-webkit-scrollbar-thumb { background: var(--fg-muted); border-radius: 999px; border: 2px solid var(--bg); }
+
+      /* Accessible focus ring, keyboard-only */
+      :focus { outline: none; }
+      :focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 3px;
+        border-radius: 6px;
       }
-      .typing-text::after {
-        content: "|";
-        animation: blink 1s infinite;
+
+      .skip-link {
+        position: fixed; top: -100px; left: 1rem; z-index: 100;
+        background: var(--card-solid); color: var(--fg);
+        padding: 0.75rem 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border);
+        font-weight: 600; font-size: 0.875rem; transition: top 0.25s ease;
+        box-shadow: var(--shadow);
       }
-      @keyframes blink {
-        0%,
-        50% {
-          opacity: 1;
-        }
-        51%,
-        100% {
-          opacity: 0;
-        }
+      .skip-link:focus { top: 1rem; }
+
+      /* ---------- Background decoration ---------- */
+      .bg-decor { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+      .grid-layer {
+        position: absolute; inset: -20%;
+        background-image:
+          linear-gradient(to right, var(--border) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 90%);
+        opacity: 0.6;
+        animation: grid-drift 50s linear infinite;
       }
-      #particles-js {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
+      @keyframes grid-drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-56px,-56px,0); } }
+
+      .blob { position: absolute; border-radius: 9999px; filter: blur(90px); will-change: transform; }
+      .blob-1 { width: 34rem; height: 34rem; top: -8rem; left: -8rem; background: radial-gradient(circle, #4F46E5, transparent 70%); opacity: 0.28; animation: blob-float 22s ease-in-out infinite; }
+      .blob-2 { width: 30rem; height: 30rem; top: 10rem; right: -10rem; background: radial-gradient(circle, #06B6D4, transparent 70%); opacity: 0.22; animation: blob-float 26s ease-in-out infinite reverse; }
+      .blob-3 { width: 28rem; height: 28rem; bottom: -6rem; left: 30%; background: radial-gradient(circle, #7C3AED, transparent 70%); opacity: 0.22; animation: blob-float 30s ease-in-out infinite; }
+      .dark .blob-1, .dark .blob-2, .dark .blob-3 { opacity: 0.32; }
+      @keyframes blob-float {
+        0%, 100% { transform: translate3d(0,0,0) scale(1); }
+        33% { transform: translate3d(4%, -6%, 0) scale(1.08); }
+        66% { transform: translate3d(-5%, 4%, 0) scale(0.94); }
       }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+      .noise {
+        position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.03; mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       }
-      .dark .glass-card {
-        background: rgba(17, 24, 39, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+
+      /* ---------- Typography ---------- */
+      .gradient-text {
+        background: linear-gradient(120deg, #4F46E5, #7C3AED 50%, #06B6D4);
+        background-size: 200% auto;
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        animation: shimmer 8s ease infinite;
       }
-      .nav-blur {
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+      @keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+      .eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-muted); }
+
+      /* ---------- Glass surfaces ---------- */
+      .glass {
+        background: var(--card);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        backdrop-filter: blur(20px) saturate(160%);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
       }
-      .timeline-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        border: 2px solid #3b82f6;
-        background: white;
-        z-index: 1;
+      .glass-card { border-radius: 1.25rem; transition: transform 0.35s cubic-bezier(.16,1,.3,1), border-color 0.3s ease, box-shadow 0.3s ease; }
+      .glass-card:hover { transform: translateY(-6px); border-color: color-mix(in srgb, var(--ring) 45%, var(--border)); }
+
+      /* ---------- Buttons ---------- */
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+        font-weight: 600; font-size: 0.9375rem; border-radius: 9999px; padding: 0.85rem 1.75rem;
+        transition: transform 0.25s cubic-bezier(.16,1,.3,1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+        white-space: nowrap;
       }
-      .dark .timeline-dot {
-        background: #111827;
+      .btn:active { transform: scale(0.97); }
+      .btn-primary {
+        color: white; background: linear-gradient(120deg, #4F46E5, #7C3AED);
+        box-shadow: 0 8px 24px -6px rgba(79, 70, 229, 0.55);
+      }
+      .btn-primary:hover { box-shadow: 0 12px 32px -6px rgba(79, 70, 229, 0.7); transform: translateY(-2px); }
+      .btn-secondary { color: var(--fg); background: var(--card); border: 1px solid var(--border); backdrop-filter: blur(16px); }
+      .btn-secondary:hover { border-color: var(--ring); transform: translateY(-2px); }
+      .btn-ghost { color: var(--fg-muted); padding: 0.6rem 1rem; }
+      .btn-ghost:hover { color: var(--fg); }
+      .btn-icon {
+        width: 2.75rem; height: 2.75rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center;
+        border: 1px solid var(--border); color: var(--fg-muted); background: var(--card); backdrop-filter: blur(16px);
+        transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      }
+      .btn-icon:hover { color: var(--ring); border-color: var(--ring); transform: translateY(-2px); }
+
+      /* ---------- Chips / badges ---------- */
+      .chip {
+        display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 600;
+        padding: 0.4rem 0.85rem; border-radius: 9999px; border: 1px solid var(--border);
+        color: var(--fg-muted); background: var(--card); backdrop-filter: blur(10px);
+        transition: color 0.25s ease, border-color 0.25s ease;
+      }
+      .chip:hover { color: var(--ring); border-color: var(--ring); }
+      .badge {
+        display: inline-flex; align-items: center; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em;
+        padding: 0.3rem 0.7rem; border-radius: 9999px;
+      }
+      .status-badge {
+        flex-shrink: 0;
+        gap: 0.4rem;
+        background: #10B981;
+        color: white;
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.28);
+      }
+      .status-badge::before {
+        content: "";
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 9999px;
+        background: currentColor;
+      }
+
+      /* ---------- Inputs ---------- */
+      .field-label { font-size: 0.8125rem; font-weight: 600; color: var(--fg-muted); margin-bottom: 0.4rem; display: block; }
+      .input {
+        width: 100%; font-size: 0.9375rem; color: var(--fg); background: var(--card);
+        border: 1px solid var(--border); border-radius: 0.85rem; padding: 0.85rem 1rem;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+      .input::placeholder { color: var(--fg-muted); }
+      .input:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 22%, transparent); }
+
+      /* ---------- Divider ---------- */
+      .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent); }
+
+      /* ---------- Tooltip ---------- */
+      [data-tooltip] { position: relative; }
+      [data-tooltip]::after {
+        content: attr(data-tooltip);
+        position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(4px);
+        background: var(--card-solid); color: var(--fg); border: 1px solid var(--border);
+        font-size: 0.75rem; font-weight: 500; white-space: nowrap; padding: 0.4rem 0.7rem; border-radius: 0.5rem;
+        box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; z-index: 40;
+      }
+      [data-tooltip]:hover::after, [data-tooltip]:focus-visible::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+      /* ---------- Scroll reveal ---------- */
+      .reveal { opacity: 0; transform: translateY(28px); filter: blur(6px); transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1), filter 0.8s cubic-bezier(.16,1,.3,1); }
+      .reveal.in { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+      /* ---------- Nav ---------- */
+      #navbar { transition: top 0.4s cubic-bezier(.16,1,.3,1), box-shadow 0.4s ease; }
+      .nav-link { position: relative; z-index: 1; padding: 0.55rem 1rem; font-size: 0.875rem; font-weight: 500; color: var(--fg-muted); border-radius: 9999px; transition: color 0.3s ease; }
+      .nav-link:hover, .nav-link.active { color: var(--fg); }
+      #nav-indicator { position: absolute; top: 4px; bottom: 4px; border-radius: 9999px; background: var(--card-solid); box-shadow: 0 2px 10px rgba(15,23,42,0.08); border: 1px solid var(--border); transition: transform 0.4s cubic-bezier(.16,1,.3,1), width 0.4s cubic-bezier(.16,1,.3,1); z-index: 0; }
+
+      #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(.16,1,.3,1); }
+      #mobile-menu.open { max-height: 26rem; }
+
+      /* ---------- Typing ---------- */
+      .typing-text::after { content: "|"; color: var(--ring); animation: blink 1s step-end infinite; margin-left: 2px; }
+      @keyframes blink { 50% { opacity: 0; } }
+
+      /* ---------- Scroll progress ---------- */
+      #scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #4F46E5, #06B6D4); z-index: 70; }
+
+      /* ---------- Back to top ---------- */
+      #back-to-top { opacity: 0; pointer-events: none; transform: translateY(12px) scale(0.9); transition: opacity 0.3s ease, transform 0.3s ease; }
+      #back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+
+      /* ---------- Modal ---------- */
+      #modal-backdrop {
+        position: fixed; inset: 0; z-index: 90; background: rgba(2, 6, 23, 0.55);
+        backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      }
+      #modal-backdrop.open { opacity: 1; pointer-events: auto; }
+      #modal {
+        position: fixed; inset: 0; margin: auto; z-index: 91; width: min(880px, 92vw); height: min(85vh, 900px);
+        opacity: 0; pointer-events: none; transform: scale(0.94) translateY(16px);
+        transition: opacity 0.35s cubic-bezier(.16,1,.3,1), transform 0.35s cubic-bezier(.16,1,.3,1);
+        display: flex; flex-direction: column; overflow: hidden; border-radius: 1.5rem;
+      }
+      #modal.open { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
+
+      /* ---------- Toast ---------- */
+      #toast-container { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 95; display: flex; flex-direction: column; gap: 0.6rem; align-items: center; }
+      .toast {
+        display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1.2rem; border-radius: 0.9rem;
+        font-size: 0.875rem; font-weight: 500; color: var(--fg); opacity: 0; transform: translateY(12px); transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      .toast.show { opacity: 1; transform: translateY(0); }
+
+      /* ---------- Magnetic buttons ---------- */
+      .magnetic { transition: transform 0.2s cubic-bezier(.16,1,.3,1); }
+
+      @media (max-width: 767px) {
+        .glass-card:hover, .magnetic { transform: none !important; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .grid-layer, .blob, .gradient-text { animation: none !important; }
+        .reveal { transition: opacity 0.3s ease !important; filter: none !important; transform: none !important; }
+        .magnetic { transition: none !important; }
       }
     </style>
   </head>
-  <body
-    class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300"
-  >
-    <div id="particles-js"></div>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
 
-    <div class="relative z-10">
-      <!-- Navigation -->
-      <nav
-        class="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-950/80 nav-blur border-b border-gray-200 dark:border-gray-800"
-      >
-        <div
-          class="container mx-auto px-4 py-4 flex justify-between items-center"
-        >
-          <a href="#" class="text-2xl font-bold gradient-text">Alen Pariyar</a>
+    <div class="bg-decor" aria-hidden="true">
+      <div class="grid-layer"></div>
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <div class="noise" aria-hidden="true"></div>
+    <div id="scroll-progress"></div>
 
-          <div class="hidden md:flex items-center space-x-8">
-            <a
-              href="#about"
-              class="hover:text-primary-500 transition-colors font-medium"
-              >About</a
-            >
-            <a
-              href="#experience"
-              class="hover:text-primary-500 transition-colors font-medium"
-              >Experience</a
-            >
-            <a
-              href="#education"
-              class="hover:text-primary-500 transition-colors font-medium"
-              >Education</a
-            >
-            <a
-              href="#projects"
-              class="hover:text-primary-500 transition-colors font-medium"
-              >Projects</a
-            >
-            <a
-              href="#skills"
-              class="hover:text-primary-500 transition-colors font-medium"
-              >Skills</a
-            >
-            <a
-              href="https://www.edu.alenpariyar.com.np"
-              target="_blank"
-              class="hover:text-primary-500 transition-colors font-medium"
-              >BCA Notes</a
-            >
-            <a
-              href="#contact"
-              class="px-5 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-full transition-all text-sm font-semibold"
-              >Hire Me</a
-            >
+    <!-- Navigation -->
+    <header id="navbar" class="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
+      <div class="glass w-full max-w-6xl rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between">
+        <a href="#main" class="font-bold text-lg tracking-tight shrink-0">
+          Alen<span class="gradient-text"> Pariyar</span>
+        </a>
 
-            <button
-              id="theme-toggle"
-              class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-            >
-              <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
-              <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
-            </button>
-          </div>
+        <nav id="nav-links" class="hidden lg:flex items-center relative gap-1 mx-4" aria-label="Primary">
+          <span id="nav-indicator"></span>
+          <a href="#about" class="nav-link active" data-section="about">About</a>
+          <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+          <a href="#education" class="nav-link" data-section="education">Education</a>
+          <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
+          <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+          <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+        </nav>
 
-          <button
-            id="menu-button"
-            class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-          >
-            <i data-lucide="menu" class="w-6 h-6"></i>
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="#contact" class="hidden sm:inline-flex btn btn-primary !py-2 !px-5 !text-sm">Hire Me</a>
+          <button id="theme-toggle" class="btn-icon" data-tooltip="Toggle theme" aria-label="Toggle color theme">
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+            <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+          </button>
+          <button id="menu-toggle" class="btn-icon lg:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+            <i data-lucide="menu" class="w-4 h-4"></i>
           </button>
         </div>
+      </div>
+    </header>
+
+    <div id="mobile-menu-wrap" class="fixed top-20 inset-x-4 z-40 lg:hidden">
+      <nav id="mobile-menu" class="glass rounded-3xl" aria-label="Mobile">
+        <div class="flex flex-col gap-1 p-4 text-sm font-medium">
+          <a href="#about" class="mobile-link px-4 py-3 rounded-xl hover:bg-[var(--border)] transition-colors">About</a>
+          <a href="#experience" class="mobile-link px-4 py-3 rounded-xl hover:bg-[var(--border)] transition-colors">Experience</a>
+          <a href="#education" class="mobile-link px-4 py-3 rounded-xl hover:bg-[var(--border)] transition-colors">Education</a>
+          <a href="#certifications" class="mobile-link px-4 py-3 rounded-xl hover:bg-[var(--border)] transition-colors">Certifications</a>
+          <a href="#projects" class="mobile-link px-4 py-3 rounded-xl hover:bg-[var(--border)] transition-colors">Projects</a>
+          <a href="#skills" class="mobile-link px-4 py-3 rounded-xl hover:bg-[var(--border)] transition-colors">Skills</a>
+          <a href="#contact" class="mobile-link btn btn-primary justify-center mt-2">Hire Me</a>
+        </div>
       </nav>
+    </div>
 
-      <!-- Hero Section -->
-      <section id="about" class="min-h-screen flex items-center pt-24 pb-12">
-        <div class="container mx-auto px-4">
-          <div class="flex flex-col lg:flex-row items-center gap-12">
-            <div class="lg:w-2/3 scroll-reveal">
-              <div
-                class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-sm font-semibold mb-6"
-              >
-                <span class="relative flex h-2 w-2 mr-2">
-                  <span
-                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"
-                  ></span>
-                  <span
-                    class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"
-                  ></span>
-                </span>
-                Available for new projects
-              </div>
-              <h1
-                class="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight"
-              >
-                Hi, I'm <span class="gradient-text">Alen Pariyar</span><br />
-                <span
-                  id="typing-text"
-                  class="text-4xl lg:text-5xl text-gray-700 dark:text-gray-400 font-bold"
-                >Web Developer</span>
-              </h1>
-                <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl leading-relaxed">
-                Former President of RR Decoders with a strong academic record. I build scalable, mission-critical web experiences using <span class="text-primary-600 dark:text-primary-400 font-bold">Laravel, PHP, Python and React</span>.
-                </p>
-              <div class="flex flex-wrap gap-4">
-                <a
-                  href="#contact"
-                  class="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl transition-all shadow-lg shadow-primary-600/30 font-bold flex items-center"
-                >
-                  <i data-lucide="mail" class="w-5 h-5 mr-2"></i> Get In Touch
-                </a>
-                <a
-                  href="https://drive.google.com/file/d/1whyZ9lkcwC7xCBRagdu9mXD56CUOC8D-/view?usp=sharing"
-                  target="_blank"
-                  class="px-8 py-4 border-2 border-primary-600 text-primary-600 dark:text-primary-400 hover:bg-primary-600 hover:text-white rounded-xl transition-all font-bold flex items-center"
-                >
-                  <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download
-                  CV
-                </a>
-              </div>
+    <main id="main" class="relative z-10">
+      <!-- Hero -->
+      <section id="about" aria-labelledby="about-heading" class="container mx-auto max-w-7xl px-5 md:px-8 pt-40 pb-24">
+        <div class="grid lg:grid-cols-5 gap-14 items-center">
+          <div class="lg:col-span-3 reveal">
+            <div class="inline-flex items-center gap-2 chip mb-5">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-success opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-success"></span>
+              </span>
+              Available for new projects
             </div>
-            <div class="lg:w-1/3 flex justify-center scroll-reveal">
-              <div class="relative w-72 h-72 lg:w-96 lg:h-96">
-                <div
-                  class="absolute inset-0 bg-gradient-to-tr from-primary-500 to-accent-500 rounded-full blur-3xl opacity-20 animate-pulse"
-                ></div>
-                <div
-                  class="relative w-full h-full rounded-full border-8 border-white dark:border-gray-900 shadow-2xl overflow-hidden"
-                >
-                  <img
-                    src="https://i.ibb.co/KpzRgjVY/alen-profile.jpg"
-                    alt="Alen Pariyar"
-                    class="w-full h-full object-cover"
-                  />
+
+            <h1 id="about-heading" class="text-5xl md:text-6xl xl:text-7xl font-extrabold leading-[1.05] tracking-tight mb-5">
+              Hi, I'm <span class="gradient-text">Alen Pariyar</span>
+            </h1>
+            <p id="typing-text" class="typing-text font-mono text-lg md:text-xl text-brand-primary dark:text-indigo-300 mb-6">Web Developer</p>
+
+            <p class="text-lg text-[var(--fg-muted)] leading-relaxed max-w-xl mb-4">
+              Aspiring Web Developer with a strong foundation in <span class="text-[var(--fg)] font-semibold">PHP, MySQL, and JavaScript</span>. Experienced in building dynamic web applications using
+              <span class="text-[var(--fg)] font-semibold">Laravel and React</span>.
+            </p>
+
+            <p class="font-mono text-xs text-[var(--fg-muted)] mb-9">
+              <span class="text-brand-secondary">const</span> developer = <span class="text-brand-accent">"Alen Pariyar"</span><span class="text-[var(--fg-muted)]">;</span>
+            </p>
+
+            <div class="flex flex-wrap gap-3 mb-14">
+              <a href="#contact" class="btn btn-primary magnetic" data-magnetic>
+                <i data-lucide="mail" class="w-4 h-4"></i> Get In Touch
+              </a>
+              <button id="preview-cv-btn" class="btn btn-secondary magnetic" data-magnetic>
+                <i data-lucide="file-text" class="w-4 h-4"></i> Preview CV
+              </button>
+              <a href="alen-cv.pdf" download class="btn btn-ghost">
+                <i data-lucide="download" class="w-4 h-4"></i> Download
+              </a>
+            </div>
+
+            <dl class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-xl">
+              <div class="glass glass-card rounded-2xl p-4">
+                <dt class="sr-only">Core GPA</dt>
+                <dd class="text-2xl font-extrabold gradient-text"><span class="stat-number" data-target="4.0" data-decimals="1">0.0</span></dd>
+                <dd class="eyebrow mt-1">Core GPA</dd>
+              </div>
+              <div class="glass glass-card rounded-2xl p-4">
+                <dt class="sr-only">Projects Shipped</dt>
+                <dd class="text-2xl font-extrabold gradient-text"><span class="stat-number" data-target="5" data-suffix="+">0</span></dd>
+                <dd class="eyebrow mt-1">Projects</dd>
+              </div>
+              <div class="glass glass-card rounded-2xl p-4">
+                <dt class="sr-only">Professional Roles</dt>
+                <dd class="text-2xl font-extrabold gradient-text"><span class="stat-number" data-target="2">0</span></dd>
+                <dd class="eyebrow mt-1">Roles</dd>
+              </div>
+              <div class="glass glass-card rounded-2xl p-4">
+                <dt class="sr-only">Certifications</dt>
+                <dd class="text-2xl font-extrabold gradient-text"><span class="stat-number" data-target="3">0</span></dd>
+                <dd class="eyebrow mt-1">Certificates</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="lg:col-span-2 reveal flex justify-center">
+            <div class="relative w-72 h-72 md:w-96 md:h-96">
+              <div class="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-brand-primary via-brand-secondary to-brand-accent opacity-30 blur-2xl"></div>
+              <div class="glass relative w-full h-full rounded-[2.5rem] overflow-hidden">
+                <img
+                  src="https://i.ibb.co/KpzRgjVY/alen-profile.jpg"
+                  alt="Alen Pariyar"
+                  class="w-full h-full object-cover"
+                  width="384" height="384"
+                />
+                <div class="absolute bottom-4 left-4 right-4 glass rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+                  <span class="text-xs font-semibold flex items-center gap-1.5 min-w-0"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-accent shrink-0"></i> Kathmandu, Nepal</span>
+                  <span class="badge status-badge">Open to work</span>
                 </div>
               </div>
             </div>
@@ -297,650 +481,583 @@
         </div>
       </section>
 
-      <!-- Experience Section -->
-      <section id="experience" class="py-24 bg-white dark:bg-gray-950">
-        <div class="container mx-auto px-4">
-          <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
-              Professional Experience
-            </h2>
-            <div class="space-y-12">
-              <!-- Experience Item 1 -->
-              <div
-                class="relative pl-10 border-l-2 border-gray-200 dark:border-gray-800 scroll-reveal"
-              >
-                <div class="absolute -left-[7px] top-0 timeline-dot"></div>
-                <div
-                  class="flex flex-col md:flex-row md:justify-between md:items-start mb-2"
-                >
-                  <h3 class="text-2xl font-bold">Laravel Developer Intern</h3>
-                  <span
-                    class="text-primary-600 dark:text-primary-400 font-semibold bg-primary-50 dark:bg-primary-900/30 px-3 py-1 rounded-md text-sm mt-2 md:mt-0"
-                    >August 2025 — November 2025</span
-                  >
-                </div>
-                <p
-                  class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4"
-                >
-                  Easy Access Pvt. Ltd | Tinkune, Kathmandu
-                </p>
-                <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                  <li class="flex items-start">
-                    <i
-                      data-lucide="chevron-right"
-                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
-                    ></i>
-                    Developed and maintained scalable web applications using
-                    Laravel and MySQL.
-                  </li>
-                  <li class="flex items-start">
-                    <i
-                      data-lucide="chevron-right"
-                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
-                    ></i>
-                    Integrated third-party APIs and optimized database queries
-                    for high performance.
-                  </li>
-                </ul>
-              </div>
+      <div class="container mx-auto max-w-7xl px-5 md:px-8"><div class="divider"></div></div>
 
-              <!-- Experience Item 2 -->
-              <div
-                class="relative pl-10 border-l-2 border-gray-200 dark:border-gray-800 scroll-reveal"
-              >
-                <div class="absolute -left-[7px] top-0 timeline-dot"></div>
-                <div
-                  class="flex flex-col md:flex-row md:justify-between md:items-start mb-2"
-                >
-                  <h3 class="text-2xl font-bold">
-                    Web Support Specialist
-                  </h3>
-                  <span
-                    class="text-gray-500 font-semibold bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-md text-sm mt-2 md:mt-0"
-                    >Sep 2023 — Nov 2023</span
-                  >
-                </div>
-                <p
-                  class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4"
-                >
-                  NEFIN Climate Change Partnership Program
-                </p>
-                <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                  <li class="flex items-start">
-                    <i
-                      data-lucide="chevron-right"
-                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
-                    ></i>
-                    Provided web support and managed data interfaces for
-                    environmental projects.
-                  </li>
-                  <li class="flex items-start">
-                    <i
-                      data-lucide="chevron-right"
-                      class="w-5 h-5 text-primary-500 mr-2 shrink-0 mt-0.5"
-                    ></i>
-                    Enhanced UI/UX for internal dashboards and reporting tools.
-                  </li>
-                </ul>
+      <!-- Experience -->
+      <section id="experience" aria-labelledby="experience-heading" class="container mx-auto max-w-7xl px-5 md:px-8 py-24">
+        <div class="max-w-3xl mx-auto">
+          <p class="reveal eyebrow text-center mb-3">Career Path</p>
+          <h2 id="experience-heading" class="reveal text-3xl md:text-4xl font-extrabold text-center mb-14 tracking-tight">Professional Experience</h2>
+
+          <div class="space-y-6">
+            <article class="reveal glass glass-card rounded-2xl p-8 relative overflow-hidden">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-primary to-brand-secondary"></div>
+              <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                <h3 class="text-xl font-bold">Full Stack Laravel Internship</h3>
+                <span class="badge bg-brand-primary/10 text-brand-primary dark:text-indigo-300 w-fit">Aug 11 — Nov 28, 2025</span>
               </div>
-            </div>
+              <p class="font-medium text-[var(--fg-muted)] mb-4">Easy Access Pvt. Ltd · Kathmandu, Nepal</p>
+              <p class="text-[var(--fg-muted)]">Full-stack web development internship building applications with Laravel, PHP, and MySQL.</p>
+            </article>
+
+            <article class="reveal glass glass-card rounded-2xl p-8 relative overflow-hidden">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-accent to-brand-primary"></div>
+              <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                <h3 class="text-xl font-bold">Web Support Specialist</h3>
+                <span class="badge bg-[var(--border)] text-[var(--fg-muted)] w-fit">Apr 2024 — Jun 2025</span>
+              </div>
+              <p class="font-medium text-[var(--fg-muted)] mb-4">NEFIN Climate Change Partnership Program · Kathmandu, Nepal</p>
+              <p class="text-[var(--fg-muted)]">Provided web support and technical assistance for the organization's environmental initiatives.</p>
+            </article>
           </div>
         </div>
       </section>
+
+      <div class="container mx-auto max-w-7xl px-5 md:px-8"><div class="divider"></div></div>
 
       <!-- Education & Leadership -->
-      <section id="education" class="py-24 bg-gray-50 dark:bg-gray-900">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
-            Education & Leadership
-          </h2>
+      <section id="education" aria-labelledby="education-heading" class="container mx-auto max-w-7xl px-5 md:px-8 py-24">
+        <p class="reveal eyebrow text-center mb-3">Background</p>
+        <h2 id="education-heading" class="reveal text-3xl md:text-4xl font-extrabold text-center mb-14 tracking-tight">Education & Leadership</h2>
 
-          <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <!-- Academic Excellence -->
-            <div
-              class="glass-card p-8 rounded-2xl scroll-reveal border border-primary-500/20"
-            >
-              <div
-                class="w-14 h-14 bg-primary-100 dark:bg-primary-900/40 rounded-xl flex items-center justify-center mb-6"
-              >
-                <i
-                  data-lucide="graduation-cap"
-                  class="w-8 h-8 text-primary-600 dark:text-primary-400"
-                ></i>
-              </div>
-
-              <h3 class="text-2xl font-bold mb-6">Academic Qualifications</h3>
-
-              <div class="space-y-8">
-                <div>
-                  <p class="font-bold text-gray-900 dark:text-white">
-                    Bachelor in Computer Application (BCA)
-                  </p>
-                  <p class="text-sm text-gray-500 mb-2">
-                    Ratna Rajyalaxmi Campus, Tribhuvan University
-                  </p>
-          
-                  <div
-                    class="flex items-center text-green-600 dark:text-green-400 font-semibold"
-                  >
-                  <i data-lucide="star" class="w-4 h-4 mr-2 fill-current"></i>
-                    GPA 4.0 in Core Programming Subjects
-                  </div>
-                </div>
-
-                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-                  <p class="font-bold text-gray-900 dark:text-white">
-                    +2 in Computer Science
-                  </p>
-                  <p class="text-sm text-gray-500 mb-3">
-                    Bhaktinamuna Secondary School, Lamjung, Nepal
-                  </p>
-                  <div
-                    class="flex items-center text-green-600 dark:text-green-400 font-semibold"
-                  >
-                    <i data-lucide="star" class="w-4 h-4 mr-2 fill-current"></i>
-                    GPA 4.0 in Computer Science
-                  </div>
-                </div>
-              </div>
-
+        <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <article class="reveal glass glass-card rounded-2xl p-8">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center mb-6">
+              <i data-lucide="graduation-cap" class="w-6 h-6 text-white"></i>
             </div>
-
-            <!-- Leadership & Vision -->
-            <div
-              class="glass-card p-8 rounded-2xl scroll-reveal border border-accent-500/20"
-            >
-              <div
-                class="w-14 h-14 bg-accent-100 dark:bg-accent-900/40 rounded-xl flex items-center justify-center mb-6"
-              >
-                <i
-                  data-lucide="award"
-                  class="w-8 h-8 text-accent-600 dark:text-accent-400"
-                ></i>
+            <h3 class="text-xl font-bold mb-6">Academic Qualifications</h3>
+            <div class="space-y-6">
+              <div>
+                <p class="font-semibold">Bachelor in Computer Application (BCA)</p>
+                <p class="text-sm text-[var(--fg-muted)] mb-2">Ratna Rajyalaxmi Campus, Tribhuvan University — 8th Semester Running</p>
+                <div class="flex items-center gap-2 text-sm font-semibold text-brand-primary dark:text-indigo-300">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i> GPA 4.0 in Core Programming Subjects
+                </div>
               </div>
-
-              <h3 class="text-2xl font-bold mb-6">Leadership & Vision</h3>
-
-              <div class="space-y-6">
-                <div>
-                  <p class="font-bold text-gray-900 dark:text-white">
-                    Former President – RR Decoders
-                  </p>
-                  <p class="text-sm text-gray-500 mb-4">
-                    Official IT Club of Ratna Rajyalaxmi Campus
-                  </p>
-
-                  <ul class="space-y-4 text-gray-600 dark:text-gray-400">
-                    <li class="flex items-start">
-                      <i
-                        data-lucide="check-circle"
-                        class="w-5 h-5 text-accent-500 mr-2 shrink-0"
-                      ></i>
-                      Led and mentored a community of 500+ tech-focused
-                      students.
-                    </li>
-                    <li class="flex items-start">
-                      <i
-                        data-lucide="check-circle"
-                        class="w-5 h-5 text-accent-500 mr-2 shrink-0"
-                      ></i>
-                      Organized campus-wide hackathons, coding competitions, and
-                      workshops.
-                    </li>
-                    <li class="flex items-start">
-                      <i
-                        data-lucide="check-circle"
-                        class="w-5 h-5 text-accent-500 mr-2 shrink-0"
-                      ></i>
-                      Built partnerships with IT companies and training
-                      institutes in Nepal.
-                    </li>
-                  </ul>
+              <div class="pt-6" style="border-top: 1px solid var(--border)">
+                <p class="font-semibold">+2 (Management with Computer Science & Mathematics)</p>
+                <p class="text-sm text-[var(--fg-muted)] mb-2">Bhaktinamuna Secondary School, Lamjung, Nepal</p>
+                <div class="flex items-center gap-2 text-sm font-semibold text-brand-primary dark:text-indigo-300">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i> GPA 4.0 in Computer Science
                 </div>
               </div>
             </div>
+          </article>
+
+          <article class="reveal glass glass-card rounded-2xl p-8">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-accent to-brand-primary flex items-center justify-center mb-6">
+              <i data-lucide="award" class="w-6 h-6 text-white"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-6">Leadership & Vision</h3>
+            <p class="font-semibold">Former President – RR Decoders</p>
+            <p class="text-sm text-[var(--fg-muted)] mb-4">IT Club, Ratna Rajyalaxmi Campus · 2025 — 2026</p>
+            <ul class="space-y-3 text-[var(--fg-muted)]">
+              <li class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-success shrink-0"></i>
+                Organized and led IT-related workshops, training sessions, and coding competitions.
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-brand-success shrink-0"></i>
+                Fostered a tech-driven environment among students at the campus.
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="max-w-5xl mx-auto mt-10">
+          <p class="reveal text-center text-sm text-[var(--fg-muted)] mb-5">4.0 GPA in Core Technical Subjects</p>
+          <div class="reveal flex flex-wrap justify-center gap-3">
+            <span class="chip"><i data-lucide="cloud" class="w-3.5 h-3.5"></i> Cloud Computing</span>
+            <span class="chip"><i class="devicon-atom-original colored text-sm"></i> Web Technology</span>
+            <span class="chip"><i class="devicon-python-plain colored text-sm"></i> Scripting Language</span>
+            <span class="chip"><i class="devicon-networkx-plain colored text-sm"></i> Network Programming</span>
+            <span class="chip"><i class="devicon-dotnetcore-plain colored text-sm"></i> .NET Technology</span>
+            <span class="chip"><i class="devicon-bash-plain colored text-sm"></i> Computer Fundamentals & Applications</span>
+            <span class="chip"><i class="devicon-php-plain colored text-sm"></i> Project I</span>
+            <span class="chip"><i class="devicon-laravel-original colored text-sm"></i> Project II</span>
+            <span class="chip"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i> Internship</span>
           </div>
         </div>
       </section>
 
-    <!-- Academics Section -->
-    <section id="academics" class="py-5 bg-gray-50 dark:bg-gray-900">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
-        Academic Achievements - 4.0 GPAs in Core Technical Subjects
-        </h2>
+      <div class="container mx-auto max-w-7xl px-5 md:px-8"><div class="divider"></div></div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
+      <!-- Certifications -->
+      <section id="certifications" aria-labelledby="certifications-heading" class="container mx-auto max-w-7xl px-5 md:px-8 py-24">
+        <p class="reveal eyebrow text-center mb-3">Continuous Learning</p>
+        <h2 id="certifications-heading" class="reveal text-3xl md:text-4xl font-extrabold text-center mb-14 tracking-tight">Training & Certifications</h2>
 
-        <!-- Computer Fundamentals & Applications -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-bash-plain colored text-5xl mb-4"></i>
-            <p class="font-bold">CFA</p>
-        </div>
-
-        <!-- Web Technology -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-atom-original colored text-5xl mb-4"></i>
-            <p class="font-bold">Web Technology</p>
-        </div>
-
-        <!-- Scripting Language -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-python-plain colored text-5xl mb-4"></i>
-            <p class="font-bold">Scripting Language</p>
-        </div>
-
-        <!-- .NET Technology -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-dotnetcore-plain colored text-5xl mb-4"></i>
-            <p class="font-bold">.NET Technology</p>
-        </div>
-
-        <!-- Network Programming -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-netbox-plain colored text-5xl mb-4"></i>
-            <p class="font-bold">Network Programming</p>
-        </div>
-
-        <!-- Cloud Computing -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-amazonwebservices-plain colored text-5xl mb-4"></i>
-            <p class="font-bold">Cloud Computing</p>
-        </div>
-
-        <!-- Project I -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-php-plain colored text-5xl mb-4"></i>
-            <p class="font-bold">Project I</p>
-        </div>
-
-        <!-- Project II -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-laravel-original colored text-5xl mb-4"></i>
-            <p class="font-bold">Project II</p>
-        </div>
-
-        <!-- Internship -->
-        <div class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal">
-            <i class="devicon-composer-plain colored text-5xl mb-4"></i>
-            <p class="font-bold">Internship</p>
-        </div>
-
-        </div>
-    </div>
-    </section>
-
-      <!-- Projects Section -->
-      <section id="projects" class="py-24 bg-white dark:bg-gray-950">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
-            Featured Projects
-          </h2>
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
-          >
-            <!-- Project 1: SaralKakshya -->
-            <div
-              class="glass-card rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-500 scroll-reveal"
-            >
-              <div class="p-8">
-                <div class="flex justify-between items-start mb-4">
-                  <h3
-                    class="text-2xl font-bold group-hover:text-primary-600 transition-colors"
-                  >
-                    SaralKakshya
-                  </h3>
-                  <a
-                    href="https://github.com/AlenPariyarOct10/SaralKakshyaProject"
-                    target="_blank"
-                    class="text-gray-400 hover:text-primary-500 transition-colors"
-                  >
-                    <i data-lucide="github" class="w-6 h-6"></i>
-                  </a>
-                </div>
-                <p class="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
-                  A smart online classroom management system that automates
-                  attendance, assignment tracking, and resource sharing for
-                  teachers and students.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-6">
-                  <span
-                    class="px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 text-xs font-bold rounded-full"
-                    >Laravel</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 text-xs font-bold rounded-full"
-                    >Livewire</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-600 text-xs font-bold rounded-full"
-                    >MySQL</span
-                  >
-                </div>
-              </div>
+        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <article class="reveal glass glass-card rounded-2xl p-8">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-6" style="background: color-mix(in srgb, #4F46E5 15%, transparent)">
+              <i data-lucide="server" class="w-6 h-6 text-brand-primary dark:text-indigo-300"></i>
             </div>
+            <h3 class="text-lg font-bold mb-2">Web Development with Laravel</h3>
+            <p class="text-sm font-medium text-brand-primary dark:text-indigo-300 mb-3">1 Month</p>
+            <p class="text-sm text-[var(--fg-muted)]">Organized by BCA Department, Ratna Rajyalaxmi Campus</p>
+          </article>
 
-            <!-- Project 2: MitraPark -->
-            <div
-              class="glass-card rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-500 scroll-reveal"
-            >
-              <div class="p-8">
-                <div class="flex justify-between items-start mb-4">
-                  <h3
-                    class="text-2xl font-bold group-hover:text-primary-600 transition-colors"
-                  >
-                    MitraPark
-                  </h3>
-                  <a
-                    href="https://github.com/AlenPariyarOct10/MitraPark"
-                    target="_blank"
-                    class="text-gray-400 hover:text-primary-500 transition-colors"
-                  >
-                    <i data-lucide="github" class="w-6 h-6"></i>
-                  </a>
-                </div>
-                <p class="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
-                  A social media networking platform focused on local
-                  communities, featuring real-time messaging, profile
-                  customization, and admin management.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-6">
-                  <span
-                    class="px-3 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-600 text-xs font-bold rounded-full"
-                    >PHP</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 text-xs font-bold rounded-full"
-                    >JavaScript</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 text-xs font-bold rounded-full"
-                    >MySQL</span
-                  >
-                </div>
-              </div>
+          <article class="reveal glass glass-card rounded-2xl p-8">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-6" style="background: color-mix(in srgb, #06B6D4 15%, transparent)">
+              <i data-lucide="layout-template" class="w-6 h-6 text-brand-accent"></i>
             </div>
+            <h3 class="text-lg font-bold mb-2">Frontend Development with React</h3>
+            <p class="text-sm font-medium text-brand-accent mb-3">2 Months</p>
+            <p class="text-sm text-[var(--fg-muted)]">Organized by Kathmandu Municipality</p>
+          </article>
 
-            <!-- Project 3: SaralNotes -->
-            <div
-              class="glass-card rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-500 scroll-reveal"
-            >
-              <div class="p-8">
-                <div class="flex justify-between items-start mb-4">
-                  <h3
-                    class="text-2xl font-bold group-hover:text-primary-600 transition-colors"
-                  >
-                    SaralNotes
-                  </h3>
-                  <a
-                    href="https://github.com/AlenPariyarOct10/SaralNoteKeep_v1"
-                    target="_blank"
-                    class="text-gray-400 hover:text-primary-500 transition-colors"
-                  >
-                    <i data-lucide="github" class="w-6 h-6"></i>
-                  </a>
-                </div>
-                <p class="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">
-                  A cross-platform note-taking app with secure JWT
-                  authentication and rich text support, built for organized
-                  academic note management.
-                </p>
-                <div class="flex flex-wrap gap-2 mb-6">
-                  <span
-                    class="px-3 py-1 bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 text-xs font-bold rounded-full"
-                    >React</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 text-xs font-bold rounded-full"
-                    >Laravel API</span
-                  >
-                  <span
-                    class="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 text-xs font-bold rounded-full"
-                    >Tailwind</span
-                  >
-                </div>
-              </div>
+          <article class="reveal glass glass-card rounded-2xl p-8">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-6" style="background: color-mix(in srgb, #7C3AED 15%, transparent)">
+              <i data-lucide="wrench" class="w-6 h-6 text-brand-secondary"></i>
             </div>
-          </div>
+            <h3 class="text-lg font-bold mb-2">Hardware, Software, Networking & Troubleshooting</h3>
+            <p class="text-sm font-medium text-brand-secondary mb-3">3 Days</p>
+            <p class="text-sm text-[var(--fg-muted)]">Organized by BCA Department, Ratna Rajyalaxmi Campus</p>
+          </article>
         </div>
       </section>
 
-      <!-- Skills Section -->
-      <section id="skills" class="py-24 bg-gray-50 dark:bg-gray-900">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl lg:text-4xl font-bold mb-16 text-center">
-            Technical Arsenal
-          </h2>
-          <div
-            class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto"
-          >
-            <!-- Skill Card -->
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-laravel-plain colored text-5xl mb-4"></i>
-              <p class="font-bold">Laravel</p>
-            </div>
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-php-plain colored text-5xl mb-4"></i>
-              <p class="font-bold">PHP</p>
-            </div>
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-python-plain colored text-5xl mb-4"></i>
-              <p class="font-bold">Python</p>
-            </div>
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-react-original colored text-5xl mb-4"></i>
-              <p class="font-bold">React</p>
-            </div>
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-javascript-plain colored text-5xl mb-4"></i>
-              <p class="font-bold">JavaScript</p>
-            </div>
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-mysql-plain colored text-5xl mb-4"></i>
-              <p class="font-bold">MySQL</p>
-            </div>
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-tailwindcss-plain colored text-5xl mb-4"></i>
-              <p class="font-bold">Tailwind</p>
-            </div>
-            <div
-              class="p-8 glass-card rounded-2xl text-center group hover:-translate-y-2 transition-all duration-300 scroll-reveal"
-            >
-              <i class="devicon-bootstrap-plain colored text-5xl mb-4"></i>
-              <p class="font-bold">Bootstrap</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div class="container mx-auto max-w-7xl px-5 md:px-8"><div class="divider"></div></div>
 
-      <!-- Footer / Contact Section -->
-      <footer id="contact" class="bg-white dark:bg-gray-950 pt-24 pb-12">
-        <div class="container mx-auto px-4 text-center">
-          <h2 class="text-4xl font-extrabold mb-8">
-            Ready to elevate your project?
-          </h2>
-          <p
-            class="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto"
-          >
-            I'm currently looking for new opportunities as a Laravel Developer.
-            Whether you have a question or just want to say hi, I'll get back to
-            you!
-          </p>
-          <a
-            href="mailto:oct10.alenpariyar@gmail.com"
-            class="inline-flex items-center px-10 py-5 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl text-lg font-bold shadow-2xl shadow-primary-600/30 transition-all transform hover:scale-105 mb-16"
-          >
-            <i data-lucide="mail" class="w-6 h-6 mr-3"></i>
-            oct10.alenpariyar@gmail.com
-          </a>
+      <!-- Projects -->
+      <section id="projects" aria-labelledby="projects-heading" class="container mx-auto max-w-7xl px-5 md:px-8 py-24">
+        <p class="reveal eyebrow text-center mb-3">Portfolio</p>
+        <h2 id="projects-heading" class="reveal text-3xl md:text-4xl font-extrabold text-center mb-14 tracking-tight">Featured Projects</h2>
 
-          <div class="flex justify-center gap-6 mb-12">
-            <a
-              href="https://github.com/AlenPariyarOct10"
-              target="_blank"
-              class="w-14 h-14 rounded-full glass-card flex items-center justify-center hover:text-primary-500 hover:border-primary-500 transition-all"
-            >
-              <i class="devicon-github-plain colored text-5xl"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/alen-pariyar/"
-              target="_blank"
-              class="w-14 h-14 rounded-full glass-card flex items-center justify-center hover:text-primary-500 hover:border-primary-500 transition-all"
-            >
-              <i class="devicon-linkedin-plain colored text-5xl"></i>
-            </a>
-            <a
-              href="https://www.facebook.com/itisalenpariyar"
-              target="_blank"
-              class="w-14 h-14 rounded-full glass-card flex items-center justify-center hover:text-primary-500 hover:border-primary-500 transition-all"
-            >
-              <i class="devicon-facebook-plain colored text-5xl"></i>
-            </a>
-          </div>
-
-          <div
-            class="pt-12 border-t border-gray-100 dark:border-gray-900 text-gray-500 text-sm"
-          >
-            <p>
-              &copy; 2026 Alen Pariyar. 
+        <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <article class="reveal glass glass-card rounded-2xl p-8 group">
+            <div class="h-1 w-12 rounded-full bg-gradient-to-r from-brand-primary to-brand-secondary mb-5 transition-all duration-500 group-hover:w-20"></div>
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-xl font-bold">SaralKakshya</h3>
+              <a href="https://github.com/AlenPariyarOct10/SaralKakshyaProject" target="_blank" rel="noopener" class="btn-icon !w-10 !h-10" data-tooltip="View on GitHub" aria-label="SaralKakshya on GitHub">
+                <i class="devicon-github-original text-base"></i>
+              </a>
+            </div>
+            <p class="text-sm text-[var(--fg-muted)] mb-3">Smart Classroom Management System — Academic Project</p>
+            <p class="text-[var(--fg-muted)] mb-6 leading-relaxed">
+              Comprehensive classroom management system enabling assignments, attendance, results, and notices — with role-based access for Super Admin, Admin, Teachers, and Students.
             </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">Laravel</span><span class="chip">Sanctum</span><span class="chip">Laravel Reverb</span><span class="chip">Livewire</span><span class="chip">MySQL</span><span class="chip">Tailwind CSS</span>
+            </div>
+          </article>
+
+          <article class="reveal glass glass-card rounded-2xl p-8 group">
+            <div class="h-1 w-12 rounded-full bg-gradient-to-r from-brand-accent to-brand-primary mb-5 transition-all duration-500 group-hover:w-20"></div>
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-xl font-bold">MitraPark</h3>
+              <a href="https://github.com/AlenPariyarOct10/MitraPark" target="_blank" rel="noopener" class="btn-icon !w-10 !h-10" data-tooltip="View on GitHub" aria-label="MitraPark on GitHub">
+                <i class="devicon-github-original text-base"></i>
+              </a>
+            </div>
+            <p class="text-sm text-[var(--fg-muted)] mb-3">Social Media & Networking Platform — Academic Project</p>
+            <p class="text-[var(--fg-muted)] mb-6 leading-relaxed">
+              Social networking platform with posts, real-time messaging, likes, comments, and an admin dashboard.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">JavaScript</span><span class="chip">jQuery</span>
+            </div>
+          </article>
+
+          <article class="reveal glass glass-card rounded-2xl p-8 group">
+            <div class="h-1 w-12 rounded-full bg-gradient-to-r from-brand-success to-brand-accent mb-5 transition-all duration-500 group-hover:w-20"></div>
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-xl font-bold">ArthaPredict</h3>
+              <a href="https://github.com/AlenPariyarOct10/ArthaPredict-AI-Based-Stock-Analysis-and-Prediction-System" target="_blank" rel="noopener" class="btn-icon !w-10 !h-10" data-tooltip="View on GitHub" aria-label="ArthaPredict on GitHub">
+                <i class="devicon-github-original text-base"></i>
+              </a>
+            </div>
+            <p class="text-sm text-[var(--fg-muted)] mb-3">AI-Based Stock Analysis & Prediction System</p>
+            <p class="text-[var(--fg-muted)] mb-6 leading-relaxed">
+              Stock analysis and prediction project focused on market insights, data processing, and AI-assisted forecasting.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">Python</span><span class="chip">AI/ML</span><span class="chip">Stock Analysis</span><span class="chip">Prediction</span>
+            </div>
+          </article>
+
+          <article class="reveal glass glass-card rounded-2xl p-8 group">
+            <div class="h-1 w-12 rounded-full bg-gradient-to-r from-brand-secondary to-brand-accent mb-5 transition-all duration-500 group-hover:w-20"></div>
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-xl font-bold">Exam Registration System</h3>
+              <a href="https://github.com/AlenPariyarOct10" target="_blank" rel="noopener" class="btn-icon !w-10 !h-10" data-tooltip="View on GitHub" aria-label="Exam Registration System on GitHub">
+                <i class="devicon-github-original text-base"></i>
+              </a>
+            </div>
+            <p class="text-sm text-[var(--fg-muted)] mb-3">Academic Project</p>
+            <p class="text-[var(--fg-muted)] mb-6 leading-relaxed">
+              Student registration system with College Admin and Super Admin dashboards, plus automated admit card generation.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">JavaScript</span><span class="chip">Bootstrap</span>
+            </div>
+          </article>
+
+          <article class="reveal glass glass-card rounded-2xl p-8 group">
+            <div class="h-1 w-12 rounded-full bg-gradient-to-r from-brand-primary to-brand-accent mb-5 transition-all duration-500 group-hover:w-20"></div>
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-xl font-bold">Online Voting System</h3>
+              <a href="https://github.com/AlenPariyarOct10" target="_blank" rel="noopener" class="btn-icon !w-10 !h-10" data-tooltip="View on GitHub" aria-label="Online Voting System on GitHub">
+                <i class="devicon-github-original text-base"></i>
+              </a>
+            </div>
+            <p class="text-sm text-[var(--fg-muted)] mb-3">Academic Project</p>
+            <p class="text-[var(--fg-muted)] mb-6 leading-relaxed">
+              A single-event online voting system covering candidate listing and secure vote casting.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">HTML/CSS</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="container mx-auto max-w-7xl px-5 md:px-8"><div class="divider"></div></div>
+
+      <!-- Skills -->
+      <section id="skills" aria-labelledby="skills-heading" class="container mx-auto max-w-7xl px-5 md:px-8 py-24">
+        <p class="reveal eyebrow text-center mb-3">Toolbox</p>
+        <h2 id="skills-heading" class="reveal text-3xl md:text-4xl font-extrabold text-center mb-14 tracking-tight">Technical Arsenal</h2>
+
+        <div class="max-w-5xl mx-auto space-y-10">
+          <div>
+            <p class="reveal eyebrow mb-4">Languages & Frameworks</p>
+            <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-php-plain colored text-2xl"></i><span class="font-medium text-sm">PHP</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-laravel-plain colored text-2xl"></i><span class="font-medium text-sm">Laravel</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-python-plain colored text-2xl"></i><span class="font-medium text-sm">Python</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i data-lucide="flame" class="w-6 h-6 text-brand-danger"></i><span class="font-medium text-sm">Livewire</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-javascript-plain colored text-2xl"></i><span class="font-medium text-sm">JavaScript</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-react-original colored text-2xl"></i><span class="font-medium text-sm">React</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i data-lucide="layers" class="w-6 h-6 text-brand-primary dark:text-indigo-300"></i><span class="font-medium text-sm">Inertia.js</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-jquery-plain colored text-2xl"></i><span class="font-medium text-sm">jQuery</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-mysql-plain colored text-2xl"></i><span class="font-medium text-sm">MySQL</span></div>
+            </div>
+          </div>
+
+          <div>
+            <p class="reveal eyebrow mb-4">Tools & Platforms</p>
+            <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-git-plain colored text-2xl"></i><span class="font-medium text-sm">Git</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-github-original text-2xl"></i><span class="font-medium text-sm">GitHub</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-wordpress-plain colored text-2xl"></i><span class="font-medium text-sm">WordPress</span></div>
+            </div>
+          </div>
+
+          <div>
+            <p class="reveal eyebrow mb-4">Other</p>
+            <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i data-lucide="share-2" class="w-6 h-6 text-brand-accent"></i><span class="font-medium text-sm">REST APIs</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i data-lucide="braces" class="w-6 h-6 text-brand-accent"></i><span class="font-medium text-sm">JSON</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-html5-plain colored text-2xl"></i><span class="font-medium text-sm">HTML</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-css3-plain colored text-2xl"></i><span class="font-medium text-sm">CSS</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i data-lucide="file-code" class="w-6 h-6 text-brand-danger"></i><span class="font-medium text-sm">Blade</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-tailwindcss-plain colored text-2xl"></i><span class="font-medium text-sm">Tailwind CSS</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-bootstrap-plain colored text-2xl"></i><span class="font-medium text-sm">Bootstrap</span></div>
+              <div class="glass glass-card rounded-xl p-5 flex items-center gap-3"><i class="devicon-photoshop-plain colored text-2xl"></i><span class="font-medium text-sm">Photoshop</span></div>
+            </div>
           </div>
         </div>
-      </footer>
+      </section>
+    </main>
+
+    <!-- Contact -->
+    <footer id="contact" aria-labelledby="contact-heading" class="container mx-auto max-w-7xl px-5 md:px-8 pb-24">
+      <div class="reveal glass rounded-[2rem] p-8 md:p-14 grid lg:grid-cols-2 gap-12">
+        <div>
+          <p class="eyebrow mb-3">Get In Touch</p>
+          <h2 id="contact-heading" class="text-3xl md:text-4xl font-extrabold tracking-tight mb-5">Ready to elevate your project?</h2>
+          <p class="text-[var(--fg-muted)] mb-8 max-w-md">
+            I'm currently looking for new opportunities as a Laravel Developer. Whether you have a question or just want to say hi, I'll get back to you!
+          </p>
+
+          <div class="space-y-3 mb-8">
+            <div class="glass rounded-xl px-4 py-3 flex items-center justify-between gap-3">
+              <a href="mailto:oct10.alenpariyar@gmail.com" class="flex items-center gap-3 min-w-0">
+                <i data-lucide="mail" class="w-4 h-4 text-brand-primary dark:text-indigo-300 shrink-0"></i>
+                <span class="text-sm font-medium truncate">oct10.alenpariyar@gmail.com</span>
+              </a>
+              <button class="btn-icon !w-9 !h-9 shrink-0" data-copy="oct10.alenpariyar@gmail.com" data-tooltip="Copy email" aria-label="Copy email address">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+            <div class="glass rounded-xl px-4 py-3 flex items-center justify-between gap-3">
+              <a href="tel:+9779816699413" class="flex items-center gap-3 min-w-0">
+                <i data-lucide="phone" class="w-4 h-4 text-brand-accent shrink-0"></i>
+                <span class="text-sm font-medium truncate">+977 981-6699413</span>
+              </a>
+              <button class="btn-icon !w-9 !h-9 shrink-0" data-copy="+9779816699413" data-tooltip="Copy phone" aria-label="Copy phone number">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <a href="https://github.com/AlenPariyarOct10" target="_blank" rel="noopener" class="btn-icon" data-tooltip="GitHub" aria-label="GitHub profile"><i class="devicon-github-original text-base"></i></a>
+            <a href="https://www.linkedin.com/in/alen-pariyar/" target="_blank" rel="noopener" class="btn-icon" data-tooltip="LinkedIn" aria-label="LinkedIn profile"><i class="devicon-linkedin-plain text-base"></i></a>
+            <a href="https://www.facebook.com/itisalenpariyar" target="_blank" rel="noopener" class="btn-icon" data-tooltip="Facebook" aria-label="Facebook profile"><i class="devicon-facebook-plain text-base"></i></a>
+          </div>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <div class="mb-4">
+            <label for="cf-name" class="field-label">Name</label>
+            <input id="cf-name" name="name" type="text" class="input" placeholder="Your name" required autocomplete="name" />
+          </div>
+          <div class="mb-4">
+            <label for="cf-email" class="field-label">Email</label>
+            <input id="cf-email" name="email" type="email" class="input" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+          <div class="mb-4">
+            <label for="cf-message" class="field-label">Message</label>
+            <textarea id="cf-message" name="message" rows="4" class="input resize-none" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-full magnetic" data-magnetic>
+            <i data-lucide="send" class="w-4 h-4"></i> Send Message
+          </button>
+          <p class="text-xs text-[var(--fg-muted)] mt-3 text-center">Opens your email app — nothing is stored or sent to a server.</p>
+        </form>
+      </div>
+
+      <div class="divider mt-16 mb-8"></div>
+      <p class="text-center text-sm text-[var(--fg-muted)]">&copy; 2026 Alen Pariyar (alenpariyar).</p>
+    </footer>
+
+    <button id="back-to-top" class="fixed bottom-6 right-6 z-40 btn-icon glass !w-12 !h-12" data-tooltip="Back to top" aria-label="Scroll back to top">
+      <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- CV Preview Modal -->
+    <div id="modal-backdrop"></div>
+    <div id="modal" class="glass" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+      <div class="flex items-center justify-between px-6 py-4" style="border-bottom: 1px solid var(--border)">
+        <h2 id="modal-title" class="font-bold text-lg flex items-center gap-2"><i data-lucide="file-text" class="w-5 h-5 text-brand-primary dark:text-indigo-300"></i> Alen Pariyar — CV</h2>
+        <div class="flex items-center gap-2">
+          <a href="alen-cv.pdf" download class="btn btn-secondary !py-2 !px-4 !text-sm"><i data-lucide="download" class="w-4 h-4"></i> Download</a>
+          <button id="modal-close" class="btn-icon" aria-label="Close preview"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+      <iframe src="alen-cv.pdf" title="Alen Pariyar CV preview" class="w-full flex-1" style="background: white"></iframe>
     </div>
+
+    <div id="toast-container" aria-live="polite"></div>
 
     <script>
-      // Initialize Lucide Icons
       lucide.createIcons();
 
-      // Theme Toggle
-      const themeToggle = document.getElementById("theme-toggle");
-      const html = document.documentElement;
+      // ---------- Page load fade-in ----------
+      window.addEventListener("load", () => document.body.classList.add("loaded"));
+      setTimeout(() => document.body.classList.add("loaded"), 800);
 
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // ---------- Theme ----------
+      const html = document.documentElement;
       if (
         localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
+        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
         html.classList.add("dark");
-      } else {
-        html.classList.remove("dark");
       }
-
-      themeToggle.addEventListener("click", () => {
+      document.getElementById("theme-toggle").addEventListener("click", () => {
         html.classList.toggle("dark");
         localStorage.theme = html.classList.contains("dark") ? "dark" : "light";
-        initParticles(); // Re-init particles to update colors
       });
 
-      // Typing Effect
+      // ---------- Mobile menu ----------
+      const menuToggle = document.getElementById("menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+      menuToggle.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.toggle("open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+      mobileMenu.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          mobileMenu.classList.remove("open");
+          menuToggle.setAttribute("aria-expanded", "false");
+        })
+      );
+
+      // ---------- Typing effect ----------
       const typingText = document.getElementById("typing-text");
-      const roles = [
-        "Laravel Developer",
-        "Full-Stack Expert",
-        "Former President, RR Decoders",
-        "Web Application Enthusiast",
-      ];
-      let roleIndex = 0;
-      let charIndex = 0;
-      let isDeleting = false;
-
+      const roles = ["Web Developer", "Laravel Developer", "Full-Stack Developer", "Former President, RR Decoders"];
+      let roleIndex = 0, charIndex = 0, deleting = false;
       function type() {
-        const currentRole = roles[roleIndex];
-        if (isDeleting) {
-          typingText.textContent = currentRole.substring(0, charIndex - 1);
-          charIndex--;
-        } else {
-          typingText.textContent = currentRole.substring(0, charIndex + 1);
-          charIndex++;
-        }
-
-        let typeSpeed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && charIndex === currentRole.length) {
-          isDeleting = true;
-          typeSpeed = 2000; // Pause at full word
-        } else if (isDeleting && charIndex === 0) {
-          isDeleting = false;
-          roleIndex = (roleIndex + 1) % roles.length;
-          typeSpeed = 500;
-        }
-
-        setTimeout(type, typeSpeed);
+        const current = roles[roleIndex];
+        typingText.textContent = deleting ? current.substring(0, charIndex - 1) : current.substring(0, charIndex + 1);
+        charIndex += deleting ? -1 : 1;
+        let speed = deleting ? 45 : 90;
+        if (!deleting && charIndex === current.length) { deleting = true; speed = 1800; }
+        else if (deleting && charIndex === 0) { deleting = false; roleIndex = (roleIndex + 1) % roles.length; speed = 400; }
+        setTimeout(type, speed);
       }
       type();
 
-      // Particles.js Initialization
-      function initParticles() {
-        const isDark = html.classList.contains("dark");
-        particlesJS("particles-js", {
-          particles: {
-            number: { value: 40, density: { enable: true, value_area: 800 } },
-            color: { value: isDark ? "#3b82f6" : "#2563eb" },
-            shape: { type: "circle" },
-            opacity: { value: 0.1, random: false },
-            size: { value: 3, random: true },
-            line_linked: {
-              enable: true,
-              distance: 150,
-              color: isDark ? "#3b82f6" : "#2563eb",
-              opacity: 0.1,
-              width: 1,
-            },
-            move: {
-              enable: true,
-              speed: 2,
-              direction: "none",
-              random: false,
-              straight: false,
-              out_mode: "out",
-              bounce: false,
-            },
-          },
-          interactivity: {
-            detect_on: "canvas",
-            events: {
-              onhover: { enable: true, mode: "grab" },
-              onclick: { enable: true, mode: "push" },
-              resize: true,
-            },
-            modes: {
-              grab: { distance: 140, line_linked: { opacity: 1 } },
-              push: { particles_nb: 4 },
-            },
-          },
-          retina_detect: true,
-        });
-      }
-      initParticles();
+      // ---------- Scroll reveal ----------
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
+      }, { threshold: 0.12 });
+      document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
 
-      // Scroll Reveal
-      const observerOptions = { threshold: 0.1 };
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
+      // ---------- Count-up stats ----------
+      function animateCount(el) {
+        const target = parseFloat(el.dataset.target);
+        const decimals = parseInt(el.dataset.decimals || "0", 10);
+        const suffix = el.dataset.suffix || "";
+        const duration = 1400;
+        const start = performance.now();
+        function step(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const value = target * eased;
+          el.textContent = value.toFixed(decimals) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = target.toFixed(decimals) + suffix;
+        }
+        requestAnimationFrame(step);
+      }
+      const countObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            prefersReducedMotion ? (e.target.textContent = parseFloat(e.target.dataset.target).toFixed(parseInt(e.target.dataset.decimals || "0", 10)) + (e.target.dataset.suffix || "")) : animateCount(e.target);
+            countObserver.unobserve(e.target);
           }
         });
-      }, observerOptions);
+      }, { threshold: 0.5 });
+      document.querySelectorAll(".stat-number").forEach((el) => countObserver.observe(el));
 
-      document
-        .querySelectorAll(".scroll-reveal")
-        .forEach((el) => observer.observe(el));
+      // ---------- Scroll progress + back-to-top + nav shadow (rAF-throttled) ----------
+      const scrollProgress = document.getElementById("scroll-progress");
+      const backToTop = document.getElementById("back-to-top");
+      const navbar = document.getElementById("navbar");
+      let ticking = false;
+      function onScroll() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        scrollProgress.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + "%";
+        backToTop.classList.toggle("visible", scrollTop > 500);
+        navbar.style.top = scrollTop > 20 ? "0.75rem" : "1rem";
+        ticking = false;
+      }
+      window.addEventListener("scroll", () => {
+        if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+      });
+      backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" }));
+
+      // ---------- Active section nav indicator ----------
+      const navLinksWrap = document.getElementById("nav-links");
+      const navIndicator = document.getElementById("nav-indicator");
+      const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+      const sections = navLinks.map((l) => document.getElementById(l.dataset.section)).filter(Boolean);
+
+      function moveIndicator(link) {
+        if (!link || !navIndicator) return;
+        navIndicator.style.width = link.offsetWidth + "px";
+        navIndicator.style.transform = `translateX(${link.offsetLeft}px)`;
+      }
+      function setActive(id) {
+        navLinks.forEach((l) => l.classList.toggle("active", l.dataset.section === id));
+        moveIndicator(navLinks.find((l) => l.dataset.section === id));
+      }
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); });
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      );
+      sections.forEach((s) => sectionObserver.observe(s));
+      window.addEventListener("resize", () => setActive(navLinks.find((l) => l.classList.contains("active"))?.dataset.section));
+      setActive("about");
+
+      // ---------- Magnetic buttons ----------
+      if (!prefersReducedMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        document.querySelectorAll("[data-magnetic]").forEach((btn) => {
+          btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.25}px, ${y * 0.4}px)`;
+          });
+          btn.addEventListener("mouseleave", () => { btn.style.transform = "translate(0,0)"; });
+        });
+      }
+
+      // ---------- Toasts ----------
+      const toastContainer = document.getElementById("toast-container");
+      function showToast(message, icon = "check-circle-2") {
+        const toast = document.createElement("div");
+        toast.className = "toast glass";
+        toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4 text-brand-success"></i><span>${message}</span>`;
+        toastContainer.appendChild(toast);
+        lucide.createIcons();
+        requestAnimationFrame(() => toast.classList.add("show"));
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 350);
+        }, 2600);
+      }
+
+      // ---------- Copy to clipboard ----------
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(btn.dataset.copy);
+            showToast("Copied to clipboard");
+          } catch {
+            showToast("Couldn't copy — try selecting manually", "alert-circle");
+          }
+        });
+      });
+
+      // ---------- Contact form (mailto, no backend) ----------
+      document.getElementById("contact-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("cf-name").value.trim();
+        const email = document.getElementById("cf-email").value.trim();
+        const message = document.getElementById("cf-message").value.trim();
+        if (!name || !email || !message) {
+          showToast("Please fill in all fields", "alert-circle");
+          return;
+        }
+        const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
+        const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+        window.location.href = `mailto:oct10.alenpariyar@gmail.com?subject=${subject}&body=${body}`;
+        showToast("Opening your email app…");
+      });
+
+      // ---------- CV preview modal ----------
+      const modal = document.getElementById("modal");
+      const modalBackdrop = document.getElementById("modal-backdrop");
+      const modalClose = document.getElementById("modal-close");
+      const previewBtn = document.getElementById("preview-cv-btn");
+      let lastFocused = null;
+
+      function openModal() {
+        lastFocused = document.activeElement;
+        modal.hidden = false;
+        requestAnimationFrame(() => { modal.classList.add("open"); modalBackdrop.classList.add("open"); });
+        modalClose.focus();
+        document.body.style.overflow = "hidden";
+      }
+      function closeModal() {
+        modal.classList.remove("open");
+        modalBackdrop.classList.remove("open");
+        document.body.style.overflow = "";
+        setTimeout(() => { modal.hidden = true; }, 350);
+        if (lastFocused) lastFocused.focus();
+      }
+      previewBtn.addEventListener("click", openModal);
+      modalClose.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", closeModal);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.hidden) closeModal();
+        if (e.key === "Tab" && !modal.hidden) {
+          const focusable = modal.querySelectorAll('button, a[href]');
+          const first = focusable[0], last = focusable[focusable.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
     </script>
   </body>
 </html>
